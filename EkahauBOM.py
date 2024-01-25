@@ -4,10 +4,14 @@
 import csv
 import sys
 import json
-import webcolors
 from zipfile import ZipFile
 from collections import Counter
 from pathlib import Path
+
+color_database = {"#FFE600" : "Yellow", "#FF8500" : "Orange", "#FF0000" : "Red",
+                  "#FF00FF" : "Pink", "#C297FF" : "Violet", "#0068FF" : "Blue",
+                  "#6D6D6D" : "Gray", "#00FF00" : "Green", "#C97700" : "Brown",
+                  "#00FFCE" : "Mint"}
 
 with ZipFile(sys.argv[1]) as f:
     access_points = json.loads(f.read("accessPoints.json"))
@@ -16,9 +20,8 @@ with ZipFile(sys.argv[1]) as f:
         if ap["mine"]:
             if "color" in ap.keys():
                 try:
-                    color_name = webcolors.hex_to_name(ap["color"])
-                    color = f'{ap["color"]} ({color_name})'
-                    vendor_model += [(ap["vendor"], ap["model"], color)]
+                    color_name = color_database[ap["color"]]
+                    vendor_model += [(ap["vendor"], ap["model"], color_name)]
                 except:
                     vendor_model += [(ap["vendor"], ap["model"], ap["color"])]
             else:
