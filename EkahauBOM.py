@@ -11,9 +11,11 @@ with ZipFile(sys.argv[1]) as f:
     access_points = json.loads(f.read("accessPoints.json"))
     vendor_model = []
     for ap in access_points["accessPoints"]:
-        vendor = ap["vendor"]
         if ap["mine"]:
-            vendor_model += [(ap["vendor"], ap["model"], ap["color"])]
+            if "color" in ap.keys():
+                vendor_model += [(ap["vendor"], ap["model"], ap["color"])]
+            else:
+                vendor_model += [(ap["vendor"], ap["model"], None)]
 
     simulated_radios = json.loads(f.read("simulatedRadios.json"))
     antennas = json.loads(f.read("antennaTypes.json"))
