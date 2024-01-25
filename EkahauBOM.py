@@ -38,10 +38,12 @@ with ZipFile(sys.argv[1]) as f:
 
 with open(f'output/{Path(sys.argv[1]).stem}_access_points.csv', "w") as ap_csv_f:
     csv_result = csv.writer(ap_csv_f, dialect="excel", quoting=csv.QUOTE_ALL)
+    csv_result.writerow(["Vendor", "Model", "Color", "Quantity"])
     for ap, count in Counter(vendor_model).items():
         csv_result.writerow([ap[0], ap[1], ap[2], count])
 
 with open(f'output/{Path(sys.argv[1]).stem}_antennas.csv', "w") as ant_csv_f:
     csv_result = csv.writer(ant_csv_f, dialect="excel", quoting=csv.QUOTE_ALL)
+    csv_result.writerow(["Antenna Model", "Quantity"])
     for antenna, count in Counter(antenna_types).items():
         csv_result.writerow([antenna, count])
