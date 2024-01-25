@@ -3,8 +3,9 @@
 
 import csv
 import sys
-from zipfile import ZipFile
 import json
+import webcolors
+from zipfile import ZipFile
 from collections import Counter
 
 with ZipFile(sys.argv[1]) as f:
@@ -13,7 +14,12 @@ with ZipFile(sys.argv[1]) as f:
     for ap in access_points["accessPoints"]:
         if ap["mine"]:
             if "color" in ap.keys():
-                vendor_model += [(ap["vendor"], ap["model"], ap["color"])]
+                try:
+                    color_name = webcolors.hex_to_name(ap["color"])
+                    color = f'{ap["color"]} ({color_name})'
+                    vendor_model += [(ap["vendor"], ap["model"], color)]
+                except:
+                    vendor_model += [(ap["vendor"], ap["model"], ap["color"])]
             else:
                 vendor_model += [(ap["vendor"], ap["model"], None)]
 
