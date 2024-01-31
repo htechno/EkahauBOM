@@ -29,7 +29,7 @@ with ZipFile(sys.argv[1]) as f:
                 except:
                     vendor_model += [(ap["vendor"], ap["model"], ap["color"], floor_name)]
             else:
-                vendor_model += [(ap["vendor"], ap["model"], None)]
+                vendor_model += [(ap["vendor"], ap["model"], None, floor_name)]
 
     simulated_radios = json.loads(f.read("simulatedRadios.json"))
     antennas = json.loads(f.read("antennaTypes.json"))
